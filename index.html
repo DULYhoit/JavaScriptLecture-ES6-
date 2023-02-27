@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">버튼1</button>
+    <button id="btn2">버튼2</button>
+    <button id="버튼">버튼이에요</button>
+    <script>
+      //this
+      //1.그냥쓰거나 일반함수에서쓰면 {window}
+      //2.오브젝트 내 함수안에서 쓰면 나를 포함하는 오브젝트 반환
+      //'use strict' : 자바스크립트를 엄격한기준으로 만듦
+
+      "use strict";
+
+      console.log(this);
+
+      function 함수(params) {
+        console.log(this);
+      }
+      함수();
+
+      var 오브젝트 = {
+        data: {
+          //에로우펑션에서는 상위요소 this를 물려받음
+          함수2: () => {
+            console.log(this);
+          },
+          //오브젝트내에서 함수 선언시 function 생략가능
+          함수3() {
+            console.log(this);
+          },
+        },
+        함수1: function () {
+          console.log(this);
+        },
+      };
+      오브젝트.함수1();
+      오브젝트.data.함수2();
+
+      //constructor this.변수=값 할시 오브젝트를 생성해주는 생성자로 바뀐다
+      function 기계() {
+        this.이름 = "kim";
+      }
+      var 오브젝트2 = new 기계();
+      console.log(오브젝트2);
+      // 이벤트리스너 에서 this사용시 e.currentTarget; 이랑똑같음
+      // e.target은 자식반환 e.currentTarget은 부모 반환
+      document.getElementById("btn").addEventListener("click", function () {
+        // console.log('버튼실행')
+        // this;
+        var array = [1, 2, 3];
+
+        array.forEach(function (data) {
+          console.log(this);
+        });
+      });
+
+      var 오브젝트3 = {
+        이름들: ["김", "이", "박"],
+        함수: function () {
+          console.log(this); //김 이 박
+          오브젝트3.이름들.forEach(() => {
+            console.log(this); // 김 이 박
+          });
+        },
+      };
+
+      //에로우펑션 매개변수가 1개이면 괄호 생략가능 ,코드한줄이면 중괄호 생략가능
+      var 에로우함수 = (a) => {
+        return a + 10;
+      };
+      var 에로우함수축약 = (a) => a + 20;
+
+      console.log(에로우함수(5));
+      console.log(에로우함수축약(10));
+
+      [1, 2, 3, 4].forEach((data) => console.log(data));
+
+      //this & arrow function 연습문제 3개
+      //1.
+      var 사람 = {
+        name: "손흥민",
+        sayHi() {
+          console.log("안녕 나는 " + this.name);
+        },
+      };
+      사람.sayHi();
+
+      //2.
+      var 자료 = {
+        data: [1, 2, 3, 4, 5],
+      };
+      자료.전부더하기 = function () {
+        var 합 = 0;
+        this.data.forEach((a) => {
+          합 += a;
+        });
+        console.log(합);
+      };
+
+      자료.전부더하기();
+
+      //3.
+      document.getElementById("버튼").addEventListener("click", function () {
+        setTimeout(() => {
+          console.log(this.innerHTML);
+        }, 1000);
+      });
+
+      //hoisting 호이스팅 현상
+      //변수의 선언을 변수 범위 맨위로 끌고오는 현상
+      //var 나이; <- 호이스팅에 의해 선언만됨으로써 에러메세지는 피함 값은 undefined
+      console.log(나이);
+      var 나이 = 30;
+      console.log(나이);
+
+      //Template literals, backquote
+      //backquote 장점
+      //1.엔터키가능
+      //2.중간중간 변수넣기 쉬움 ${데이터}
+      // var 변수 = `손흥민`;
+      // var 문자 = `안녕하세요 ${변수} 입니다`
+      // console.log(문자);
+
+      // function name(문자들,변수들) {
+      //     console.log(문자들),
+      //     console.log(변수들)
+      // }
+      // name`안녕하세요 ${변수} 입니다`
+      var pants = 0;
+      var socks = 100;
+      function calc(a, b, c) {
+        if (b == 0) {
+          console.log(a[0] + " 다팔렸어요" + a[1] + c);
+        } else {
+          console.log(a[0] + b + a[1] + c);
+        }
+      }
+      calc`바지${pants} 양말${socks}`;
+
+      //spread operator
+      //사용방법 = ...
+
+      // var array1 =['hello', 'world'];
+      // console.log(...array1)
+
+      // var 문자1 = 'hello';
+      // console.log(...문자1);
+
+      // var a2 = [1,2,3];
+      // var b2 = [4,5];
+
+      // var c2 = [...a2];
+      // console.log(c2);
+
+      //deep copy
+      // var a2 =[1,2,3];
+      // var b2 = a2;
+      // a2[3] = 4;
+
+      // console.log(a2);
+      // console.log(b2);
+
+      //독립적이게 합치기
+      // var a2 =[1,2,3];
+      // var b2 = [...a2];
+      // a2[3] = 4;
+
+      // console.log(a2);
+      // console.log(b2);
+
+      //오브젝트는 deepcopy할때 중복이잇는값이면 뒤에오는값으로 대채함
+      // var o1 = { a : 1, b : 2};
+      // var o2 = {...o1};
+      // console.log(o2);
+
+      //함수 파라미터 넣을때
+      function 더하기(a,b,c) {
+        console.log(a + b + c);
+      }
+      var arr = [10,20,30];
+    //   더하기.apply(undefined, arr);
+    더하기(...arr);
+
+    //apply
+
+    var person = {
+        인사 : function(){
+            console.log(this.name +'안녕')
+        }
+    }
+    
+    var person2 = {
+        name : '손흥민'
+    }
+    person.인사();
+    person.인사.apply(person2, [1,2]);
+    person.인사.call(person2, 1);
+
+    </script>
+  </body>
+</html>
