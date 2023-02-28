@@ -180,28 +180,253 @@
       // console.log(o2);
 
       //함수 파라미터 넣을때
-      function 더하기(a,b,c) {
+      function 더하기(a, b, c) {
         console.log(a + b + c);
       }
-      var arr = [10,20,30];
-    //   더하기.apply(undefined, arr);
-    더하기(...arr);
+      var arr = [10, 20, 30];
+      //   더하기.apply(undefined, arr);
+      더하기(...arr);
 
-    //apply
+      //apply
 
-    var person = {
-        인사 : function(){
-            console.log(this.name +'안녕')
+      var person = {
+        인사: function () {
+          console.log(this.name + "안녕");
+        },
+      };
+
+      var person2 = {
+        name: "손흥민",
+      };
+      person.인사();
+      person.인사.apply(person2, [1, 2]);
+      person.인사.call(person2, 1);
+      //default parameter/ arguments
+      function 더하기2(a, b = 임시함수()) {
+        console.log(a + b);
+      }
+      function 임시함수() {
+        return 20;
+      }
+
+      더하기2(1);
+      //arguments(옛날문법) 는 매개변수를 배열값으로 반환
+      //장점. 매개변수가 늘어남에따라 확장성에 유용하다
+      //단점. 원하는값만 나오게 하고싶다면 자료를 쪼개야한다
+      function 함수2(a, b, c) {
+        console.log(arguments);
+      }
+      함수2(1, 2, 3);
+
+      //Rest파라미터 매개변수하나로 모든값을 저장함
+      //...rest는 항상 매개변수 마지막에
+      //두번이상 금지
+      function 함수3(a, b, ...rest) {
+        console.log(rest);
+      }
+      함수3(1, 2, 3, 4);
+
+      function 예제(...rest) {
+        for (let i = 0; i < rest.length; i++) {
+          console.log(rest[i]);
         }
-    }
-    
-    var person2 = {
-        name : '손흥민'
-    }
-    person.인사();
-    person.인사.apply(person2, [1,2]);
-    person.인사.call(person2, 1);
+      }
+      예제(1, 2, 3, 4, 5, 6, 7, 8, 9, 0);
+      //
 
+      function 글자세기(word) {
+        var 결과 = {};
+        [...word].sort().forEach(function (params) {
+          if (결과[params] > 0) {
+            결과[params] = 결과[params] + 1;
+          } else {
+            결과[params] = 1;
+          }
+        });
+        console.log(결과);
+      }
+
+      글자세기("cccaacbbbㅠㅠㅠ");
+      //primitive data type vs reference data type
+      //원시타입을 복사할경우 값안에있는 그대로 복사가가능 단일변수 가능;
+      //참조타입을 복사하는경우 값이아닌 주소를복사 따라서 단일변수 불가능; 단일변수로 만들고싶으면 spraed operator 사용해서 값자체를 복사해야함
+      var primitive = 1234; //원시타입
+      var array4 = [1, 2, 3]; //참조타입
+
+      // var name1 = '김';
+      // var name2 = name1;
+      // name1 = '박';
+      // console.log(name2);
+
+      // var name1 = {name : '김'};
+      // var name2 = name1;
+      // name1.name = '박';
+      // console.log(name2.name);
+
+      // var name1 = {name : '김'};
+      // function 변경(obj) {
+      //   obj = {name : 'park'}
+      // }
+      // 변경(name1);
+
+      //constructor 생성자
+
+      // var 학생 = {
+      //   name : 'Kim',
+      //   age : 15,
+      // }
+
+      function Student(a, b) {
+        this.name = a;
+        this.age = b;
+        this.sayhi = function () {
+          console.log(
+            "안녕하세요 " + this.name + " 입니다." + "나이는 :" + this.age
+          );
+        };
+      }
+      Student.prototype.gender = "남";
+
+      var 학생1 = new Student("박", 50);
+      학생1.sayhi();
+      // var 학생2 = {
+      //   name : 'Kim',
+      //   age : 15,
+      //   sayHi(){
+      //     console.log('안녕하세요 '+this.name+' 입니다.');
+      //   }
+
+      // }
+      // 학생2.sayHi();
+
+      var 학생3 = new Student("김", 15);
+      학생3.sayhi();
+
+      //prototype(유전자) 자바스크립트에만 있는 문법
+      //__proto__ 해당객체의 부모를 알려주는 단어
+      //prototype의 함수를 상속시켜서 사용 (옜날문법)
+      Array.prototype.remove3 = function (...rest) {
+        for (let i = 0; i < this.length; i++) {
+          if (this[i] == 3) {
+            this.splice(i, 3);
+          }
+        }
+        return console.log(rest);
+      };
+
+      var arr = [1, 2, 3];
+      arr.remove3();
+
+      console.log(arr); //[1,2]
+      //상속 ES5방법: Object.create(프로토타입object);
+      var parent = { name: "Kim", age: 50 };
+      var child = Object.create(parent);
+      child.name = "park";
+      console.log(child.name);
+
+      var son = Object.create(child);
+      console.log(son.name);
+      //상속 Es6방법: class
+      // class Parent {
+      //   constructor(){
+      //     this.name = 'kim';
+      //     this.age = 50;
+      //     this.sayHi=function(){
+      //       console.log(this.name+'입니다');
+      // }
+      //constructor 바깥쪽에 함수를 만들시 부모의 prototype으로 만들어짐
+      //     this.sayHi2 = function() {
+
+      //     }
+      //   }
+      // }
+      // var child2 = new Parent();
+      // child2.sayHi();
+
+      //상속 extends,super
+      class Grendpar {
+        constructor(name) {
+          this.firstname = "Kim";
+          this.lastname = name;
+        }
+      }
+
+      // var grendpar = new Grendpar('만덕');
+      class Father extends Grendpar {
+        constructor(name) {
+          //extends로 상속받은 자식은 this를 못씀 부모를 가르키는 super()를 써야함
+          super(name);
+          this.age = 50;
+        }
+      }
+      var con = new Father("안녕");
+      console.log(con.lastname);
+
+      //getter,setter :값을 넣을때 실수를 방지하고자 object안에 함수를 만들어서쓰는 기법
+      //ES5 이상부터 함수앞에 set,get 이라는 단어를 작성하면 humen.setAge = 값; 이런식으로 쓸수있음
+      var humen = {
+        name: "Park",
+        age: 30,
+        get nextAge() {
+          return this.age + 1;
+        },
+        set setAge(age) {
+          this.age = parseInt(age);
+        },
+      };
+      humen.setAge = "20";
+      console.log(humen.nextAge);
+
+      class Dog {
+        constructor(type, color) {
+          this.type = type;
+          this.color = color;
+        }
+      }
+
+      class Cat extends Dog {
+        constructor(type, color, age) {
+          super(type, color);
+          this.age = age;
+        }
+      }
+
+      var 강아지 = new Dog("말티즈", "white");
+      var 고양이 = new Cat("코숏", "white", 5);
+      console.log(강아지.type);
+      console.log(고양이.type);
+
+      //destructuring 패턴매칭
+
+      //값을 가지고올때
+      //   var arr5 = [2,3,4];
+      //  var [a,b,c = 10] = [2,3];
+      //  console.log(a,b,c);
+
+      // var obj5 = { name: "Kim", age: 30 };
+      // var { name, age } = obj5;
+      // console.log(name, age);
+
+      //값을 넣을때
+      // var name = 'Kim';
+      // var age = 30;
+      // var obj5 ={name, age};
+      // console.log(obj5.age);
+
+      //함수 파라미터 만들때도 사용가능
+      var obj5 = {name : 'Kim', age : 30};
+
+      function 함수5({name,age}) {
+        console.log(name);
+        console.log(age);
+      }
+
+      함수5({name : 'Kim', age : 30});
+    
+    </script>
+    <script type="module">
+        import * as library from '/library.js'
+        console.log(library.a);
     </script>
   </body>
 </html>
