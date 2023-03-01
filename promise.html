@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.min.js"
+      integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+      crossorigin="anonymous"
+    ></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <img id="test" src="car1.png" alt="" />
+
+    <script>
+      //   var promise = new Promise(function (resolve, reject) {
+      //     var img = document.querySelector("#test");
+      //     img.addEventListener("load", function () {
+      //       resolve();
+      //     });
+      //     img.addEventListener("error", function () {
+      //       reject();
+      //     });
+      //   });
+
+      //   promise
+      //     .then(function () {
+      //       console.log("성공");
+      //     })
+      //     .catch(function () {
+      //       console.log("실패");
+      //     });
+      
+      //promise로 ajax구현 가시성이 좀 떨어짐
+    //   var promise = promise2('https://codingapple1.github.io/hello.txt');
+
+    //   promise
+    //     .then(function (data) {
+    //       console.log(data);
+    //       return promise2('https://codingapple1.github.io/hello2.txt');
+    //     })
+    //     .then(function (data) {
+    //       console.log(data);
+    //     });
+
+    //   function promise2(url) {
+    //    return new Promise((resolve, reject) => {
+    //       $.get(url).done(function ( 
+    //         data
+    //       ) {
+    //         resolve(data);
+    //       });
+    //     });
+    //   }
+
+    //promise 대신 쓸수있는 async/await
+
+    async function 더하기() {
+        var promise = new Promise(function(resolve,reject) {
+            var 힘든연산 = 1 + 1 ;
+            reject(100);
+        });
+        try {
+            //에러나면
+            var 결과 = await promise;
+            console.log(결과);
+        } catch{
+            console.log('실패');
+        }
+    }
+
+    더하기();
+    // 더하기().then(function(data) {
+    //     console.log('성공입니다'+ data);
+    // })
+    </script>
+  </body>
+</html>

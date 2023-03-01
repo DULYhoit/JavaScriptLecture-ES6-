@@ -2,6 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.min.js"
+      integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+      crossorigin="anonymous"
+    ></script>
 
     <title>Document</title>
   </head>
@@ -414,19 +419,54 @@
       // console.log(obj5.age);
 
       //함수 파라미터 만들때도 사용가능
-      var obj5 = {name : 'Kim', age : 30};
+      var obj5 = { name: "Kim", age: 30 };
 
-      function 함수5({name,age}) {
+      function 함수5({ name, age }) {
         console.log(name);
         console.log(age);
       }
 
-      함수5({name : 'Kim', age : 30});
-    
+      함수5({ name: "Kim", age: 30 });
+      //동기와 비동기
+      //자바스크립트는 기본적으로 동기식처리임
+      //settimeout함수(wep api 와관련된 함수)를 쓰면 1 3 2 출력됨 비동기식처리 ,이함수들을 순차적으로 실행하려면 콜백함수를 사용해야함
+      // console.log(1);
+      // setTimeout(() => {
+      //   console.log(2);
+      // }, 1000);
+      // console.log(3);
+
+      //비동기식으로 처리를해야할때 쓰는 패턴중하나
+      //하지만 함수가많아지면 가시성이 떨어지는등 문제가있음
+      //.then() 함수이용 :promise 패턴
+
+      // function 첫째함수(둘째함수) {
+      //   둘째함수();
+      // }
+
+      // function 둘째함수() {}
+
+      // 첫째함수()
+      //   .then(function () {})
+      //   .then(function () {});
+
+      var promise = new Promise(function(resolve,reject) {
+        //resolve(); 성공
+        //reject(); 실패
+      });
+
+      promise.then(function() {
+        
+      }).then(function() {
+        
+      }).catch(function() {
+        //1번이 실패하면 catch가 실행됨
+      })
     </script>
     <script type="module">
-        import * as library from '/library.js'
-        console.log(library.a);
+      //ES6의 새로운 import 문법
+      import * as library from "/library.js";
+      console.log(library.a);
     </script>
   </body>
 </html>
