@@ -450,18 +450,54 @@
       //   .then(function () {})
       //   .then(function () {});
 
-      var promise = new Promise(function(resolve,reject) {
-        //resolve(); 성공
-        //reject(); 실패
-      });
+      // var promise = new Promise(function(resolve,reject) {
+      //   //resolve(); 성공
+      //   //reject(); 실패
+      // });
 
-      promise.then(function() {
+      // promise.then(function() {
         
-      }).then(function() {
+      // }).then(function() {
         
-      }).catch(function() {
-        //1번이 실패하면 catch가 실행됨
-      })
+      // }).catch(function() {
+      //   //1번이 실패하면 catch가 실행됨
+      // })
+      
+      //async,await
+
+      // async function 함수12() {
+      //   var 어려운연산 = new Promise((resolve,reject) =>{
+      //     var result = 1+1;
+      //     resolve();
+      //   })
+      //   var result = await 어려운연산;
+      // }
+
+      //symbol 문법 : 오브젝트에 숨기고싶은 데이터값이 있을경우 사용
+      var cm = Symbol('키입니다.');
+
+      var person = {name : 'kim'};
+
+      person[cm] = 180;
+      
+      //map,set
+      var map = new Map();
+      
+      map.set('name','kim');
+
+      var set = new Set();
+      set.add('kim');
+      set.add('kim');
+      set.add('kyu');
+
+
+      
+
+      
+      
+      
+
+
     </script>
     <script type="module">
       //ES6의 새로운 import 문법
